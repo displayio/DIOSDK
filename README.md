@@ -16,7 +16,7 @@ You can add `DIOSDK` to your Xcode project using **Swift Package Manager**:
 3. Enter the repository URL:
 
    ```
-   https://github.com/your-org-or-name/DIOSDK.git
+   https://github.com/displayio/DIOSDK
    ```
 
 4. Choose the version you want to integrate.
