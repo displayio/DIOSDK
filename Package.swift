@@ -34,7 +34,8 @@ let package = Package(
                 "DIOSDK",
                 "FBAudienceNetwork",
                 "DIOFacebookAdapter"
-            ]
+            ],
+            path: "."
         )
     ]
 )
