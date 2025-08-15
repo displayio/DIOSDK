@@ -2,7 +2,11 @@ import Foundation
 import FBAudienceNetwork
 import DIOFacebookAdapter
 
-public enum DIOSDKLinker {
-    static let fb = FBAudienceNetworkAds.self
-    static let adapter = DIOFacebookAdProvider.self
+public class DIOSDKLinker {
+    public static let keep: Void = {
+        let provider = DIOFacebookAdProvider()
+        let fbSDK = FBAudienceNetworkAds()
+        _ = DIOFacebookAdProvider.self
+        _ = FBAudienceNetworkAds.self
+    }()
 }
