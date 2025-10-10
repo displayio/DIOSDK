@@ -15,8 +15,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "DIOSDK",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.4.4/DIOSDK.zip",
-            checksum: "f8151fb6a60ccd560794d35067afe878cbfcc6cdc9d57f479e21881badffaf14"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.4.5/DIOSDK.zip",
+            checksum: "250e3a3242c37cf77290c363a3949ea05eb99cd7c135c9dca51aae01a9639d75"
         ),
         .binaryTarget(
             name: "FBAudienceNetwork",
