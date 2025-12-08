@@ -10,13 +10,17 @@ let package = Package(
         .library(
             name: "DIOSDK",
             targets: ["DIOSDKWrapper"]
+        ),
+        .library(
+            name: "DIOSDKCore",
+            targets: ["DIOSDKCoreWrapper"]
         )
     ],
     targets: [
         .binaryTarget(
             name: "DIOSDK",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.4.5/DIOSDK.zip",
-            checksum: "250e3a3242c37cf77290c363a3949ea05eb99cd7c135c9dca51aae01a9639d75"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.4.6/DIOSDK.zip",
+            checksum: "a42f08d718ab49cedffdc113f2620d913da054891ef064626ed8fb60e104bbf8"
         ),
         .binaryTarget(
             name: "FBAudienceNetwork",
@@ -25,14 +29,21 @@ let package = Package(
         ),
         .binaryTarget(
             name: "DIOFacebookAdapter",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/fbadapter/4.4.3/DIOFacebookAdapter.zip",
-            checksum: "854490f83dd0b94679bf26509899f4a675b15cca12d2f6ff589260cac2a78ce7"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/fbadapter/4.4.6/DIOFacebookAdapter.zip",
+            checksum: "ab05e00650425a365a4cff17c793d389060b6c39f2d8829faf411beec3e00a9e"
         ),
         .target(
             name: "DIOSDKWrapper",
             dependencies: [
                 "DIOSDK",
                 "FBAudienceNetwork",
+                "DIOFacebookAdapter"
+            ]
+        ),
+        .target(
+            name: "DIOSDKCoreWrapper",
+            dependencies: [
+                "DIOSDK",
                 "DIOFacebookAdapter"
             ]
         )
