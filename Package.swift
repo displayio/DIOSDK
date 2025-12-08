@@ -1,4 +1,6 @@
 // swift-tools-version:5.3
+// DIOSDK - Complete SDK
+// DIOSDKCore - FBAudienceNetwork.xcframework required separately
 import PackageDescription
 
 let package = Package(

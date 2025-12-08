@@ -20,6 +20,9 @@ You can add `DIOSDK` to your Xcode project using **Swift Package Manager**:
    ```
 
 4. Choose the version you want to integrate.
+5. Select the product:
+   - **DIOSDK** — Complete SDK (recommended)
+   - **DIOSDKCore** — SDK without FBAudienceNetwork (requires adding `FBAudienceNetwork.xcframework` separately)
 
 > 💡 This package includes a precompiled `.xcframework` and supports iOS 10.0+
 
@@ -36,7 +39,12 @@ You can add `DIOSDK` to your Xcode project using **Swift Package Manager**:
 ## 📘 Example Usage
 
 ```swift
+// For DIOSDK (complete)
 import DIOSDK
+
+// For DIOSDKCore
+import DIOSDKCore
+// Note: FBAudienceNetwork.xcframework must be added manually
 
 // Initialize and use DIOSDK classes
 ```
