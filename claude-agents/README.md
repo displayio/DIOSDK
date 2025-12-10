@@ -6,8 +6,8 @@ AI-powered agents for automated DIO SDK integration using [Claude Code](https://
 
 | Agent | Platform | Description |
 |-------|----------|-------------|
-| `dio-agent-android.md` | Android | Full SDK integration with waterfall support |
-| `dio-agent-ios.md` | iOS | Coming soon |
+| `dio-android-integrator.md` | Android | Full SDK integration with waterfall support |
+| `dio-ios-integrator.md` | iOS | Coming soon |
 
 ## Quick Install
 
@@ -19,9 +19,9 @@ bash <(curl -fsSL https://raw.githubusercontent.com/displayio/DIOSDK/main/claude
 ## Manual Install
 
 1. Download the agent file for your platform
-2. Place it in your project: `.claude/agents/`
+2. Place it in: `~/.claude/agents/` (global) or `.claude/agents/` (project)
 3. Launch Claude Code: `claude`
-4. Use the agent: `@dio-agent-android ...`
+4. Use the agent: `Use dio-android-integrator.md to integrate DIO SDK`
 
 ## Usage
 
@@ -32,7 +32,7 @@ claude
 
 Then type:
 ```
-Use @dio-agent-android to integrate DIO SDK.
+Use @dio-android-integrator to integrate DIO SDK.
 
 Config:
 - App ID: YOUR_APP_ID
@@ -64,6 +64,6 @@ Strategy: DIO SDK as primary, fallback to existing SDKs.
 
 ## Links
 
-- [DIO SDK Documentation](https://www.display.io/documentation/)
-- [DIO Dashboard](https://platform.display.io/)
+- [DIO SDK Documentation](https://docs.display.io)
+- [DIO Dashboard](https://dashboard.display.io)
 - [Claude Code](https://claude.ai/code)
