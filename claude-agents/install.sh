@@ -99,11 +99,11 @@ case $PLATFORM in
         download_agent "dio-android-integrator.md"
         ;;
     ios)
-        echo -e "${YELLOW}⚠️  iOS agent coming soon!${NC}"
+        download_agent "dio-ios-integrator.md"
         ;;
     all)
         download_agent "dio-android-integrator.md"
-        # download_agent "dio-ios-integrator.md"  # Coming soon
+        download_agent "dio-ios-integrator.md"
         ;;
     *)
         echo -e "${RED}✗ Unknown platform: ${PLATFORM}${NC}"
@@ -121,14 +121,15 @@ ls -1 "$AGENTS_DIR"/*.md 2>/dev/null | xargs -n1 basename | sed 's/^/   • /'
 echo ""
 echo "🚀 Usage:"
 echo ""
-echo "   1. Navigate to your Android project:"
+echo "   1. Navigate to your project:"
 echo -e "      ${BLUE}cd /path/to/your/project${NC}"
 echo ""
 echo "   2. Launch Claude Code:"
 echo -e "      ${BLUE}claude${NC}"
 echo ""
 echo "   3. Integrate DIO SDK:"
-echo -e "      ${YELLOW}Use dio-android-integrator.md to integrate DIO SDK${NC}"
+echo -e "      ${YELLOW}Use dio-android-integrator to integrate DIO SDK (Android)${NC}"
+echo -e "      ${YELLOW}Use dio-ios-integrator to integrate DIO SDK (iOS)${NC}"
 echo -e "      ${YELLOW}App ID: YOUR_APP_ID${NC}"
 echo -e "      ${YELLOW}Placements: Interstitial: XXX, Banner: XXX${NC}"
 echo ""
