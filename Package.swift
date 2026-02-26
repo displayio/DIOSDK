@@ -1,12 +1,12 @@
 // swift-tools-version:5.3
-// DIOSDK - Complete SDK
-// DIOSDKCore - FBAudienceNetwork.xcframework required separately
+// DIOSDK - Complete SDK (includes FBAudienceNetwork via SPM)
+// DIOSDKCore - add FBAudienceNetwork dependency separately
 import PackageDescription
 
 let package = Package(
     name: "DIOSDK",
     platforms: [
-        .iOS(.v10)
+        .iOS(.v13)
     ],
     products: [
         .library(
@@ -18,27 +18,25 @@ let package = Package(
             targets: ["DIOSDKCoreWrapper"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/facebook/FBAudienceNetwork", from: "6.21.0")
+    ],
     targets: [
         .binaryTarget(
             name: "DIOSDK",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.4.6/DIOSDK.zip",
-            checksum: "a42f08d718ab49cedffdc113f2620d913da054891ef064626ed8fb60e104bbf8"
-        ),
-        .binaryTarget(
-            name: "FBAudienceNetwork",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/FBAudienceSDK/FBAudienceNetwork-6.20.1.zip",
-            checksum: "6d4827501812b47af0c3ccf74c14eb39a651fe30fb414a54a6114dda5bc793ff"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.5.0/DIOSDK.zip",
+            checksum: "18ed0915ed9950fd6b2f26e64d334b42ddf29e21eafd43797861e76ff8e34d49"
         ),
         .binaryTarget(
             name: "DIOFacebookAdapter",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/fbadapter/4.4.6/DIOFacebookAdapter.zip",
-            checksum: "ab05e00650425a365a4cff17c793d389060b6c39f2d8829faf411beec3e00a9e"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/fbadapter/4.5.0/DIOFacebookAdapter.zip",
+            checksum: "3cfe3966267aadcf9e3b534bb57340938418ab7f9b592c011c2cb07ea8e405ba"
         ),
         .target(
             name: "DIOSDKWrapper",
             dependencies: [
                 "DIOSDK",
-                "FBAudienceNetwork",
+                .product(name: "FBAudienceNetwork", package: "FBAudienceNetwork"),
                 "DIOFacebookAdapter"
             ]
         ),
