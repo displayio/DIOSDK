@@ -24,8 +24,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "DIOSDK",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.5.1/DIOSDK.zip",
-            checksum: "444654d67a6d9b1c2d19f15efbe101200ed83731ce3f56c97ed9de5bc67b84d1"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.5.2/DIOSDK.zip",
+            checksum: "ef5dca786838aebc591cee221a5de54dbf1559fedf0da3feda1a589801118cf1"
         ),
         .binaryTarget(
             name: "DIOFacebookAdapter",
