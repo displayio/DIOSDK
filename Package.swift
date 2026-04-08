@@ -1,6 +1,5 @@
 // swift-tools-version:5.3
 // DIOSDK - Complete SDK (includes FBAudienceNetwork via SPM)
-// DIOSDKCore - add FBAudienceNetwork dependency separately
 import PackageDescription
 
 let package = Package(
@@ -12,10 +11,6 @@ let package = Package(
         .library(
             name: "DIOSDK",
             targets: ["DIOSDKWrapper"]
-        ),
-        .library(
-            name: "DIOSDKCore",
-            targets: ["DIOSDKCoreWrapper"]
         )
     ],
     dependencies: [
@@ -24,27 +19,14 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "DIOSDK",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.5.2/DIOSDK.zip",
-            checksum: "ef5dca786838aebc591cee221a5de54dbf1559fedf0da3feda1a589801118cf1"
-        ),
-        .binaryTarget(
-            name: "DIOFacebookAdapter",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/fbadapter/4.5.0/DIOFacebookAdapter.zip",
-            checksum: "3cfe3966267aadcf9e3b534bb57340938418ab7f9b592c011c2cb07ea8e405ba"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.5.3/DIOSDK.zip",
+            checksum: "83a60dcf94cd49e9ddc4b7de2b569ef78c873db5e893291298670bf0f102fe1c"
         ),
         .target(
             name: "DIOSDKWrapper",
             dependencies: [
                 "DIOSDK",
-                .product(name: "FBAudienceNetwork", package: "FBAudienceNetwork"),
-                "DIOFacebookAdapter"
-            ]
-        ),
-        .target(
-            name: "DIOSDKCoreWrapper",
-            dependencies: [
-                "DIOSDK",
-                "DIOFacebookAdapter"
+                .product(name: "FBAudienceNetwork", package: "FBAudienceNetwork")
             ]
         )
     ]
