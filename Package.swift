@@ -1,5 +1,8 @@
 // swift-tools-version:5.3
-// DIOSDK - Complete SDK (includes FBAudienceNetwork via SPM)
+// DIOSDK — two products:
+//   - "DIOSDK": includes FBAudienceNetwork transitively via SPM (default)
+//   - "DIOSDK-WithoutFBAudienceNetwork": does not pull FBAudienceNetwork;
+//     consumer is responsible for providing it themselves (any version, any way)
 import PackageDescription
 
 let package = Package(
@@ -11,6 +14,10 @@ let package = Package(
         .library(
             name: "DIOSDK",
             targets: ["DIOSDKWrapper"]
+        ),
+        .library(
+            name: "DIOSDK-WithoutFBAudienceNetwork",
+            targets: ["DIOSDKWrapperNoFAN"]
         )
     ],
     dependencies: [
@@ -19,8 +26,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "DIOSDK",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.5.4/DIOSDK.zip",
-            checksum: "7535205d30a98adb2ae0bb121cf8c827b23207542dd76f6bc787b0117b3f8597"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.5.5/DIOSDK.zip",
+            checksum: "71eff18edd9e9a17aa8ba601820c04348fc03cf9b57468ac816f0766285059e6"
         ),
         .target(
             name: "DIOSDKWrapper",
@@ -28,6 +35,10 @@ let package = Package(
                 "DIOSDK",
                 .product(name: "FBAudienceNetwork", package: "FBAudienceNetwork")
             ]
+        ),
+        .target(
+            name: "DIOSDKWrapperNoFAN",
+            dependencies: ["DIOSDK"]
         )
     ]
 )
