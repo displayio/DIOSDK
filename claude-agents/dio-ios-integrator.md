@@ -14,7 +14,7 @@ Integrate DIO SDK into iOS projects with minimal disruption, following best prac
 ## Required Information from User
 - **APP_ID**: From DIO platform (required)
 - **Placement IDs**: For each ad type needed
-- **Ad Types**: interstitial, banner, medium rectangle, in-feed, interscroller, inline
+- **Ad Types**: interstitial, banner, medium rectangle, in-feed, interscroller, inline, native
 - **Integration Mode**: 
   - Fresh integration (no existing ads)
   - Primary with fallback (DIO first, existing SDKs as backup)
@@ -113,7 +113,7 @@ Before making changes, analyze the project:
 5. **Fetch latest SDK version**:
    - Fetch `https://raw.githubusercontent.com/displayio/DIOSDK/main/Package.swift`
    - Find URL pattern: `https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/X.X.X/DIOSDK.zip`
-   - Extract version number from URL (e.g., `4.4.6`)
+   - Extract version number from URL (e.g., `4.7.4`)
    - Report: `📦 Latest DIO SDK version: X.X.X`
 
 Report all findings before proceeding.
@@ -234,6 +234,7 @@ struct DioAdConfig {
     static let infeed = "PLACEMENT_ID"
     static let interscroller = "PLACEMENT_ID"
     static let inline = "PLACEMENT_ID"
+    static let native = "PLACEMENT_ID"
 }
 ```
 
@@ -247,6 +248,7 @@ struct DioAdConfig {
 + (NSString *)infeed;
 + (NSString *)interscroller;
 + (NSString *)inline;
++ (NSString *)native;
 @end
 
 @implementation DioAdConfig
@@ -258,6 +260,7 @@ struct DioAdConfig {
 + (NSString *)infeed { return @"PLACEMENT_ID"; }
 + (NSString *)interscroller { return @"PLACEMENT_ID"; }
 + (NSString *)inline { return @"PLACEMENT_ID"; }
++ (NSString *)native { return @"PLACEMENT_ID"; }
 
 @end
 ```
@@ -601,6 +604,64 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
 }
 ```
 
+#### Native (publisher-rendered)
+
+Native ads are rendered by **you**: load the ad, read its fields, place them
+into your own layout, then register your views for interaction.
+
+**Objective-C:**
+```objc
+// 1. Load (same request flow), then cast to the native interface
+DIOAdRequest *request = [placement newAdRequest];
+[request requestAdWithAdReceivedHandler:^(DIOAd *ad) {
+    if (![ad conformsToProtocol:@protocol(DIONativeAdInterface)]) { return; }
+    DIOAdUnit<DIONativeAdInterface> *nativeAd = (DIOAdUnit<DIONativeAdInterface> *)ad;
+    [self bindNativeAd:nativeAd];
+} noAdHandler:^(NSError *error) { /* fallback */ }];
+
+// 2. Bind fields into your layout and register for interaction
+- (void)bindNativeAd:(DIOAdUnit<DIONativeAdInterface> *)nativeAd {
+    self.headlineLabel.text = nativeAd.headline ?: @"";
+    self.bodyLabel.text     = nativeAd.body ?: @"";
+    [self.ctaButton setTitle:(nativeAd.callToAction ?: @"") forState:UIControlStateNormal];
+    // also: nativeAd.advertiser / nativeAd.price / nativeAd.privacy / nativeAd.hasVideoContent
+
+    // mediaSlot is required; iconSlot/headlineLabel/ctaButton are optional.
+    // DIONativeMediaView is the SDK-provided slot for media/icon.
+    [nativeAd registerViewForInteraction:self.adRootView
+                               mediaSlot:self.mediaSlot
+                                iconSlot:self.iconSlot
+                           headlineLabel:self.headlineLabel
+                               ctaButton:self.ctaButton];
+}
+
+// 3. Cleanup
+- (void)destroy { [self.nativeAd close]; self.nativeAd = nil; }
+```
+
+**Swift:**
+```swift
+request?.requestAd(adReceivedHandler: { ad in
+    guard let nativeAd = ad as? (DIOAdUnit & DIONativeAdInterface) else { return }
+    self.headlineLabel.text = nativeAd.headline()
+    self.ctaButton.setTitle(nativeAd.callToAction(), for: .normal)
+    // also: body() / advertiser() / price() / privacy() / hasVideoContent()
+
+    nativeAd.registerView(forInteraction: self.adRootView,
+                          mediaSlot: self.mediaSlot,   // DIONativeMediaView, required
+                          iconSlot: self.iconSlot,
+                          headlineLabel: self.headlineLabel,
+                          ctaButton: self.ctaButton)
+}, noAdHandler: { error in /* fallback */ })
+```
+
+> **Custom asset IDs (ORTB-SDK flow).** For the server-side ORTB flow where the
+> publisher builds the bid request, asset IDs and per-asset params are
+> configurable on `DIONativePlacement` (`setHeadlineParams:` / `setMainImageParams:`
+> / `setVideoParams:` / `setIconParams:` / `setBodyParams:` / `setCallToActionParams:`
+> / `setPriceParams:`, each taking a `DIONativePlacementAssetParams` built with a
+> custom `initWithAssetId:`). Defaults (asset IDs 1..7) apply when nothing is set.
+
 ---
 
 ### Phase 7: SwiftUI Integration
@@ -773,7 +834,7 @@ After each phase, report:
 | Placement not found | Verify placement ID, check SDK initialized |
 | No ads | Normal in active mode, verify placement is in test in platform |
 | Init timeout | Check internet, verify APP_ID |
-| Cannot fetch SDK version | Use fallback, ask user to check github.com/displayio/DIOSDK or propose latest known version 4.4.6 |
+| Cannot fetch SDK version | Use fallback, ask user to check github.com/displayio/DIOSDK or propose latest known version 4.7.4 |
 
 ## Important Rules
 
@@ -803,6 +864,6 @@ After each phase, report:
    url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/X.X.X/DIOSDK.zip"
    ```
 
-3. Extract version from URL path (e.g., `/sdk/4.4.6/DIOSDK.zip` → version `4.4.6`)
+3. Extract version from URL path (e.g., `/sdk/4.7.4/DIOSDK.zip` → version `4.7.4`)
 
 4. Use this version for both SPM and CocoaPods integration

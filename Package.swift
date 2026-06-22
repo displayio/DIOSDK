@@ -26,8 +26,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "DIOSDK",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.7.3/DIOSDK.zip",
-            checksum: "997ae1fefd9f67634cea2ae43821d63deb9ea90b4814e85580a1f33e00ad3bcf"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.7.4/DIOSDK.zip",
+            checksum: "a985056e0b7d20c4d907ca2f04e22c1f1f8e342af84f6c1e340783eec5a069f2"
         ),
         .target(
             name: "DIOSDKWrapper",
