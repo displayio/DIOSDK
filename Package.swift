@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 // DIOSDK — two products:
 //   - "DIOSDK": includes FBAudienceNetwork transitively via SPM (default)
 //   - "DIOSDK-WithoutFBAudienceNetwork": does not pull FBAudienceNetwork;
@@ -8,7 +8,7 @@ import PackageDescription
 let package = Package(
     name: "DIOSDK",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v15)
     ],
     products: [
         .library(
@@ -21,13 +21,13 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/facebook/FBAudienceNetwork", from: "6.21.0")
+        .package(url: "https://github.com/facebook/FBAudienceNetwork", from: "6.22.0")
     ],
     targets: [
         .binaryTarget(
             name: "DIOSDK",
-            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.7.5/DIOSDK.zip",
-            checksum: "809ec283ae1479866b33b847670795dff23c453ae707aa44b074ea3d750f52be"
+            url: "https://mp-cocoapods-hosting.s3.us-west-2.amazonaws.com/sdk/4.8.0/DIOSDK.zip",
+            checksum: "27d6a4def9a20cf668d616a20bf5f15de1a35091ba9a85935c379ebc02294ca8"
         ),
         .target(
             name: "DIOSDKWrapper",
